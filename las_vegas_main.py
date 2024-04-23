@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from imblearn.over_sampling import SMOTE
-
+from sklearn.linear_model import LinearRegression
 # Function to load data
 
 
@@ -163,6 +163,37 @@ def traveler_type_classification(df):
     print(classification_report(y_test, y_pred, zero_division=1))  # Handling zero division explicitly
 
 
+# Function to perform online engagement analysis
+def online_engagement_analysis(df):
+    # Select relevant columns
+    X = df[['Nr. reviews', 'Helpful votes']]
+    y = df['Score']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Create and fit the linear regression model
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    # Predict scores
+    y_pred_train = model.predict(X_train)
+    y_pred_test = model.predict(X_test)
+
+    # Evaluate the model
+    train_score = model.score(X_train, y_train)
+    test_score = model.score(X_test, y_test)
+
+    print("Train R-squared:", train_score)
+    print("Test R-squared:", test_score)
+
+    # Plot predicted vs. actual scores
+    plt.figure(figsize=(10, 6))
+    plt.scatter(y_test, y_pred_test)
+    plt.xlabel('Actual Score')
+    plt.ylabel('Predicted Score')
+    plt.title('Actual vs. Predicted Scores (Online Engagement Analysis)')
+    plt.show()
 
 # Example usage
 if __name__ == '__main__':
@@ -180,4 +211,5 @@ if __name__ == '__main__':
     get_traveller_type_details(df)
     traveler_type_classification(df)
     plot_correlation_matrix(df_encoded)
+    online_engagement_analysis(df)
     
