@@ -24,8 +24,6 @@ def inspect_data(df):
     print(df.head())
 
 # Univariate Analysis
-
-
 def plot_histogram(df, column):
     plt.figure(figsize=(10, 6))
     sns.histplot(df[column], kde=True)
@@ -40,8 +38,6 @@ def plot_boxplot(df, column):
     plt.show()
 
 # Bivariate Analysis
-
-
 def plot_scatter(df, x_col, y_col):
     plt.figure(figsize=(10, 6))
     sns.scatterplot(x=df[x_col], y=df[y_col])
@@ -57,15 +53,11 @@ def plot_grouped_bar(df, x_col, y_col):
     plt.show()
 
 # Multivariate Analysis
-
-
 def plot_pairplot(df, columns):
     sns.pairplot(df[columns])
     plt.show()
 
 # Function to encode categorical columns
-
-
 def label_encode_columns(df, columns):
     le = LabelEncoder()
     for col in columns:
@@ -76,8 +68,6 @@ def label_encode_columns(df, columns):
     return df
 
 # Function to plot the correlation matrix
-
-
 def plot_correlation_matrix(df):
     # Optionally encode or select numeric columns here
     # Ensure df is numeric if not pre-processed
@@ -86,9 +76,6 @@ def plot_correlation_matrix(df):
     sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt=".2f")
     plt.title('Correlation Matrix')
     plt.show()
-
-
-
 
 def traveler_type_classification_1(df):
     # Ensure that the columns are in the correct format (numeric)
@@ -128,7 +115,6 @@ def traveler_type_classification_1(df):
     print("Classification Report:\n", classification_report(y_test, y_pred))
 
 def clean_stars(df, stars_column='Hotel stars'):
-
     df = df.dropna().reset_index(drop=True)
     # Replace commas with periods to handle European decimal notation
     df[stars_column] = df[stars_column].replace(',', '.', regex=True)
@@ -139,7 +125,6 @@ def clean_stars(df, stars_column='Hotel stars'):
     # Remove rows with NaN values across the entire DataFrame
     
     return df
-
 
 def get_traveller_type_details(df):
     class_counts = df['Traveler type'].value_counts()
@@ -161,8 +146,6 @@ def traveler_type_classification(df):
     y_pred = classifier.predict(X_test)
     print("Accuracy:", accuracy_score(y_test, y_pred))
     print(classification_report(y_test, y_pred, zero_division=1))  # Handling zero division explicitly
-
-
 
 # Example usage
 if __name__ == '__main__':
